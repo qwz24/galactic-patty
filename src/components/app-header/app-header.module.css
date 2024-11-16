@@ -1,0 +1,49 @@
+.headerContainer {
+  width: 100%;
+  height: 56px;
+  display: flex;
+  justify-content: center;
+}
+
+.header {
+  max-width: 1240px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+}
+
+.navList {
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+
+.navItem {
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+}
+
+.navLink {
+  outline: none;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.navLink:visited {
+  color: var(---text-default);
+}
+
+.navLink:focus {
+  color: var(---text-default);
+}
+
+.linkText {
+  color: var(---text-default);
+}

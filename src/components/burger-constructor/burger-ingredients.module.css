@@ -1,0 +1,26 @@
+.ingredientsContainer {
+  height: 464px;
+  overflow-y: auto;
+  margin-bottom: 16px;
+
+  /* display: flex; */
+
+  /* scrollbar-color: #8585ad #2f2f37;
+  scrollbar-width: thin; */
+}
+
+.ingredientsContainer::-webkit-scrollbar {
+  width: 8px;
+}
+
+.ingredientsContainer::-webkit-scrollbar-thumb {
+  background-color: #8585ad;
+}
+
+.ingredientsContainer::-webkit-scrollbar-track {
+  background: #2f2f37;
+}
+
+.li {
+  display: flex;
+}

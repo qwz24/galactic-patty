@@ -1,0 +1,19 @@
+.containerHeader {
+  max-width: 1920px;
+  width: 100%;
+  margin: 0 auto;
+  height: 88px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1c1c21;
+}
+
+.containerMain {
+  max-width: 1240px;
+  width: 100%;
+  margin: 40px auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
