@@ -2,43 +2,12 @@
   max-width: 600px;
 }
 
-.card {
-  position: relative;
-  display: flex;
-  justify-content: end;
-}
-
-.counter {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #4c4cff;
-  width: 32px;
-  height: 32px;
-  border-radius: 16px;
-}
-
 .cardsContainer {
   display: flex;
   justify-content: space-between;
   flex-direction: row;
   flex-wrap: wrap;
   gap: 16px;
-}
-
-.cardPrice {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-}
-
-.cardTitle {
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  max-width: 272px;
 }
 
 .ingredientsContainer {

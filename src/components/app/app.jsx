@@ -23,7 +23,11 @@ function App() {
         <AppHeader />
       </div>
       <div className={appStyle.containerMain}>
-        <BurgerIngredients bunItem={bunItem} sauceItem={sauceItem} />
+        <BurgerIngredients
+          bunItem={bunItem}
+          sauceItem={sauceItem}
+          mainItem={mainItem}
+        />
         <BurgerConstructor mainItem={mainItem} bunItem={bunItem} />
       </div>
     </>
