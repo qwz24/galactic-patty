@@ -4,18 +4,36 @@ import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import '../../index.css';
 import { useEffect, useState } from 'react';
-import { fetchMockData } from '../../utils/data';
+import { BASE_URL } from '../../constans/api';
 
 function App() {
-  const [ingredients, setIngredients] = useState([]);
+  const [ingredientsData, setIngredientsData] = useState([]);
 
   useEffect(() => {
-    fetchMockData().then(res => setIngredients(res));
+    const fetchIngredientsData = async () => {
+      try {
+        const res = await fetch(`${BASE_URL}/api/ingredients`);
+        if (!res.ok) {
+          throw new Error(`Response status: ${res.status}`);
+        }
+        const json = await res.json();
+
+        if (!json.success) {
+          throw new Error('Failed to fetch ingredients: success = false');
+        }
+
+        setIngredientsData(json.data);
+      } catch (e) {
+        console.error(e.message);
+      }
+    };
+
+    fetchIngredientsData();
   }, []);
 
-  const bunItem = ingredients.filter(i => i.type === 'bun');
-  const sauceItem = ingredients.filter(i => i.type === 'sauce');
-  const mainItem = ingredients.filter(i => i.type === 'main');
+  const bunItem = ingredientsData.filter(i => i.type === 'bun');
+  const sauceItem = ingredientsData.filter(i => i.type === 'sauce');
+  const mainItem = ingredientsData.filter(i => i.type === 'main');
 
   return (
     <>

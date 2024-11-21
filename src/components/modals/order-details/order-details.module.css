@@ -1,0 +1,12 @@
+.popupСontainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.popupClose {
+  position: absolute;
+  top: 60px;
+  right: 40px;
+}

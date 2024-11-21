@@ -17,43 +17,23 @@ const BurgerIngredients = ({ bunItem, sauceItem, mainItem }) => {
         <p className='text text_type_main-medium'>Булки</p>
         <div className={`${style.cardsContainer} ${'mt-6 mr-4 mb-10 ml-4'}`}>
           {bunItem.map(bun => {
-            return (
-              <IngredientCard
-                key={bun._id}
-                img={bun.image}
-                price={bun.price}
-                title={bun.name}
-              />
-            );
+            return <IngredientCard key={bun._id} {...bun} />;
           })}
         </div>
         <div>
           <p className='text text_type_main-medium'>Соусы</p>
           <div className={`${style.cardsContainer} ${'mt-6 mr-4 mb-10 ml-4'}`}>
             {sauceItem.map(sauce => {
-              return (
-                <IngredientCard
-                  key={sauce._id}
-                  img={sauce.image}
-                  price={sauce.price}
-                  title={sauce.name}
-                />
-              );
+              return <IngredientCard key={sauce._id} {...sauce} />;
             })}
           </div>
         </div>
         <div>
           <p className='text text_type_main-medium'>Начинки</p>
+
           <div className={`${style.cardsContainer} ${'mt-6 mr-4 mb-10 ml-4'}`}>
             {mainItem.map(main => {
-              return (
-                <IngredientCard
-                  key={main._id}
-                  img={main.image}
-                  price={main.price}
-                  title={main.name}
-                />
-              );
+              return <IngredientCard key={main._id} {...main} />;
             })}
           </div>
         </div>

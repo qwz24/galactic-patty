@@ -1,0 +1,27 @@
+.popupСontainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 640px;
+}
+
+.popupHeader {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.popupTitle {
+  max-width: 520px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.popupNutrients {
+  display: flex;
+  gap: 20px;
+  max-width: 520px;
+  justify-content: space-around;
+}
