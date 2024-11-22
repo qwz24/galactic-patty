@@ -3,37 +3,39 @@ import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import '../../index.css';
-import { useEffect, useState } from 'react';
-import { BASE_URL } from '../../constans/api';
+import { useEffect, useMemo, useState } from 'react';
+import { BASE_URL, fetchWithChecks } from '../../constans/api';
 
 function App() {
   const [ingredientsData, setIngredientsData] = useState([]);
 
   useEffect(() => {
-    const fetchIngredientsData = async () => {
+    const fetchData = async () => {
       try {
-        const res = await fetch(`${BASE_URL}/api/ingredients`);
-        if (!res.ok) {
-          throw new Error(`Response status: ${res.status}`);
-        }
-        const json = await res.json();
-
-        if (!json.success) {
-          throw new Error('Failed to fetch ingredients: success = false');
-        }
-
-        setIngredientsData(json.data);
+        const data = await fetchWithChecks(`${BASE_URL}/api/ingredients`);
+        setIngredientsData(data);
       } catch (e) {
         console.error(e.message);
       }
     };
 
-    fetchIngredientsData();
+    fetchData();
   }, []);
 
-  const bunItem = ingredientsData.filter(i => i.type === 'bun');
-  const sauceItem = ingredientsData.filter(i => i.type === 'sauce');
-  const mainItem = ingredientsData.filter(i => i.type === 'main');
+  const bunItem = useMemo(
+    () => ingredientsData.filter(i => i.type === 'bun'),
+    [ingredientsData]
+  );
+
+  const sauceItem = useMemo(
+    () => ingredientsData.filter(i => i.type === 'sauce'),
+    [ingredientsData]
+  );
+
+  const mainItem = useMemo(
+    () => ingredientsData.filter(i => i.type === 'main'),
+    [ingredientsData]
+  );
 
   return (
     <>
