@@ -1,12 +1,8 @@
 .ingredientsContainer {
-  height: 464px;
-  overflow-y: auto;
+  min-height: 80px;
+  max-height: 464px;
+  overflow-y: scroll;
   margin-bottom: 16px;
-
-  /* display: flex; */
-
-  /* scrollbar-color: #8585ad #2f2f37;
-  scrollbar-width: thin; */
 }
 
 .ingredientsContainer::-webkit-scrollbar {
@@ -21,6 +17,6 @@
   background: #2f2f37;
 }
 
-.li {
-  display: flex;
+.dragging {
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }

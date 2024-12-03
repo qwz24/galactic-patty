@@ -1,38 +1,89 @@
 import style from './burger-ingredients.module.css';
-import PropTypes from 'prop-types';
 import IngredientCard from './ingredient-сard/ingredient-сard';
 import TabMenu from './tab-menu/tab-menu';
-import { ingredientsItemType } from '../../types/prop-types';
+import { useSelector } from 'react-redux';
+import { useRef, useState } from 'react';
 
-const BurgerIngredients = ({ bunItem, sauceItem, mainItem }) => {
+const BurgerIngredients = () => {
+  const { buns, sauces, mains } = useSelector(
+    state => state.ingredients.categories
+  );
+
+  const [activeTab, setActiveTab] = useState('bun');
+  const tabRef = useRef();
+  const headersRef = useRef([]);
+
+  const handleScroll = () => {
+    const distances = headersRef.current.map(header => {
+      const tabTop = header.getBoundingClientRect().top;
+      const headerTop = tabRef.current.getBoundingClientRect().top;
+      return Math.abs(headerTop - tabTop);
+    });
+
+    const closestIndex = distances.indexOf(Math.min(...distances));
+    const tabs = ['bun', 'sauce', 'main'];
+    setActiveTab(tabs[closestIndex]);
+  };
+
+  const handleTabClick = tab => {
+    setActiveTab(tab);
+
+    const tabIndex = ['bun', 'sauce', 'main'].indexOf(tab);
+    const headerElement = headersRef.current[tabIndex];
+    if (headerElement) {
+      headerElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }
+  };
+
   return (
     <div className={style.container}>
       <p className='text text_type_main-large pb-5'>Соберите бургер</p>
 
-      <div style={{ display: 'flex' }}>
-        <TabMenu />
+      <div style={{ display: 'flex' }} ref={tabRef}>
+        <TabMenu activeTab={activeTab} setActiveTab={handleTabClick} />
       </div>
 
-      <div className={`${style.ingredientsContainer} ${'mt-10'}`}>
-        <p className='text text_type_main-medium'>Булки</p>
+      <div
+        className={`${style.ingredientsContainer} ${'mt-10'}`}
+        onScroll={handleScroll}
+      >
+        <p
+          className='text text_type_main-medium'
+          ref={el => (headersRef.current[0] = el)}
+        >
+          Булки
+        </p>
         <div className={`${style.cardsContainer} ${'mt-6 mr-4 mb-10 ml-4'}`}>
-          {bunItem.map(bun => {
+          {buns.map(bun => {
             return <IngredientCard key={bun._id} {...bun} />;
           })}
         </div>
         <div>
-          <p className='text text_type_main-medium'>Соусы</p>
+          <p
+            className='text text_type_main-medium'
+            ref={el => (headersRef.current[1] = el)}
+          >
+            Соусы
+          </p>
           <div className={`${style.cardsContainer} ${'mt-6 mr-4 mb-10 ml-4'}`}>
-            {sauceItem.map(sauce => {
+            {sauces.map(sauce => {
               return <IngredientCard key={sauce._id} {...sauce} />;
             })}
           </div>
         </div>
         <div>
-          <p className='text text_type_main-medium'>Начинки</p>
+          <p
+            className='text text_type_main-medium'
+            ref={el => (headersRef.current[2] = el)}
+          >
+            Начинки
+          </p>
 
           <div className={`${style.cardsContainer} ${'mt-6 mr-4 mb-10 ml-4'}`}>
-            {mainItem.map(main => {
+            {mains.map(main => {
               return <IngredientCard key={main._id} {...main} />;
             })}
           </div>
@@ -40,12 +91,6 @@ const BurgerIngredients = ({ bunItem, sauceItem, mainItem }) => {
       </div>
     </div>
   );
-};
-
-BurgerIngredients.propTypes = {
-  bunItem: PropTypes.arrayOf(ingredientsItemType),
-  sauceItem: PropTypes.arrayOf(ingredientsItemType),
-  mainItem: PropTypes.arrayOf(ingredientsItemType),
 };
 
 export default BurgerIngredients;

@@ -4,23 +4,60 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './ingredient-сard.module.css';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import IngredientDetails from '../../modals/ingredient-details/ingredient-details';
 import Modal from '../../modals/modal';
+import { useDispatch, useSelector } from 'react-redux';
+import { setViewedIngredient } from '../../../services/ingredientsSlice';
+import { useDrag } from 'react-dnd';
 
 const IngredientCard = props => {
-  const { image, name, price } = props;
+  const { _id, type, image, name, price } = props;
+
+  const constructorIngredients = useSelector(
+    state => state.ingredients.constructorIngredients
+  );
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const count = useCallback(
+    id => {
+      return (
+        constructorIngredients.buns.reduce((acc, el) => {
+          if (el._id === id) {
+            return acc + 1;
+          }
+          return acc;
+        }, 0) +
+        constructorIngredients.mains.reduce((acc, el) => {
+          if (el._id === id) {
+            return acc + 1;
+          }
+          return acc;
+        }, 0)
+      );
+    },
+    [constructorIngredients]
+  );
+  const [, dragRef] = useDrag({
+    type,
+    item: { _id, type },
+    collect: monitor => ({
+      isDragging: monitor.isDragging(),
+    }),
+  });
 
   const handleClick = () => {
     setIsModalOpen(true);
+    dispatch(setViewedIngredient({ ...props }));
   };
 
   return (
     <>
       {isModalOpen && (
         <Modal setIsModalOpen={setIsModalOpen}>
-          <IngredientDetails setIsModalOpen={setIsModalOpen} {...props} />
+          <IngredientDetails setIsModalOpen={setIsModalOpen} />
         </Modal>
       )}
       <div
@@ -29,7 +66,9 @@ const IngredientCard = props => {
         className={style.card}
         role='button'
       >
-        <Counter count={1} size='default' extraClass='m-1' />
+        {count(_id) > 0 && (
+          <Counter count={count(_id)} size='default' extraClass='m-1' />
+        )}
         <div>
           <div
             className={'mr-4 ml-4'}
@@ -39,7 +78,12 @@ const IngredientCard = props => {
               alignItems: 'end',
             }}
           >
-            <img src={image} alt={name} className={style.cardImage} />
+            <img
+              ref={dragRef}
+              src={image}
+              alt={name}
+              className={style.cardImage}
+            />
           </div>
 
           <div className={`${style.cardPrice} mt-1 mb-1`}>
@@ -60,7 +104,8 @@ IngredientCard.propTypes = {
   image: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
-  isScrollable: PropTypes.bool,
+  _id: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
 };
 
 export default IngredientCard;

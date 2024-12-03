@@ -5,8 +5,17 @@ import {
 import done from '../../../images/done.png';
 import style from './order-details.module.css';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetOrderState } from '../../../services/ingredientsSlice';
 
 const OrderDetails = ({ setIsModalOpen }) => {
+  const orderNumber = useSelector(
+    state => state.ingredients.order.orderDetails?.orderNumber
+  );
+  const dispatch = useDispatch();
+  const handleClick = () => {
+    dispatch(resetOrderState());
+  };
   return (
     <div
       className={`${style.popupСontainer} ${'pt-30 pr-25 pb-30 pl-25'}`}
@@ -22,10 +31,10 @@ const OrderDetails = ({ setIsModalOpen }) => {
             setIsModalOpen(false);
           }}
         >
-          <CloseIcon />
+          <CloseIcon onClick={handleClick} />
         </Button>
       </div>
-      <p className='text text_type_digits-large mb-8'>034536</p>
+      <p className='text text_type_digits-large mb-8'>{orderNumber}</p>
       <p className='text text_type_main-medium'>идентификатор заказа</p>
       <img
         style={{ maxWidth: '120px', maxHeight: '120px' }}

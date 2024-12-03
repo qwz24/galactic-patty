@@ -4,17 +4,14 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './ingredient-details.module.css';
 import PropTypes from 'prop-types';
-import { ingredientsItemType } from '../../../types/prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetViewedIngredient } from '../../../services/ingredientsSlice';
 
-const IngredientDetails = ({
-  setIsModalOpen,
-  carbohydrates,
-  fat,
-  proteins,
-  calories,
-  image_large,
-  name,
-}) => {
+const IngredientDetails = ({ setIsModalOpen }) => {
+  const { carbohydrates, fat, proteins, calories, image_large, name } =
+    useSelector(state => state.ingredients.viewedIngredient);
+
+  const dispatch = useDispatch();
   return (
     <div className={`${style.popupСontainer} ${'pt-10 pr-10 pb-15 pl-10'}`}>
       <div className={style.popupHeader}>
@@ -29,6 +26,7 @@ const IngredientDetails = ({
           style={{ padding: '0px' }}
           onClick={() => {
             setIsModalOpen(false);
+            dispatch(resetViewedIngredient());
           }}
         >
           <CloseIcon />
@@ -90,5 +88,4 @@ export default IngredientDetails;
 
 IngredientDetails.propTypes = {
   setIsModalOpen: PropTypes.func.isRequired,
-  ...ingredientsItemType.propTypes,
 };
