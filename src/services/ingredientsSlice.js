@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { BASE_URL } from '../constans/api';
 import { v4 as uuidv4 } from 'uuid';
+import { request } from '../utils/utils';
 
 const initialConstructorIngredients = { buns: [], mains: [] };
 const initialOrderState = {
@@ -36,44 +36,42 @@ export const ingredientsSlice = createSlice({
       state.viewedIngredient = [];
     },
 
-    addIngredientToConstructor: (state, action) => {
-      const ingredientMain = state.ingredientsList.find(
-        i => i._id === action.payload._id && i.type !== 'bun'
-      );
-
-      const ingredientBun = state.ingredientsList.find(
-        i => i._id === action.payload._id && i.type === 'bun'
-      );
-
-      if (ingredientMain) {
-        const uniqueId = `${uuidv4()}-${Date.now()}`;
-        state.constructorIngredients.mains.push({
-          ...ingredientMain,
-          id: uniqueId,
-        });
-        state.order.orderPrice += ingredientMain.price;
-      }
-
-      if (ingredientBun) {
-        const uniqueId1 = `${uuidv4()}-${Date.now()}`;
-        const uniqueId2 = `${uuidv4()}-${Date.now()}`;
-        state.constructorIngredients.buns =
-          state.constructorIngredients.buns.filter(ing => ing.type !== 'bun');
-
-        state.constructorIngredients.buns.push({
-          ...ingredientBun,
-          id: uniqueId1,
-        });
-
-        state.constructorIngredients.buns.push({
-          ...ingredientBun,
-          id: uniqueId2,
-        });
-
-        state.order.orderPrice = calculateOrderPrice(
-          state.constructorIngredients
+    addIngredientToConstructor: {
+      reducer: (state, action) => {
+        const ingredientMain = state.ingredientsList.find(
+          i => i._id === action.payload._id && i.type !== 'bun'
         );
-      }
+
+        const ingredientBun = state.ingredientsList.find(
+          i => i._id === action.payload._id && i.type === 'bun'
+        );
+
+        if (ingredientMain) {
+          state.constructorIngredients.mains.push({
+            ...ingredientMain,
+            id: action.payload.uniqueId,
+          });
+          state.order.orderPrice += ingredientMain.price;
+        }
+
+        if (ingredientBun) {
+          state.constructorIngredients.buns =
+            state.constructorIngredients.buns.filter(ing => ing.type !== 'bun');
+
+          state.constructorIngredients.buns.push(
+            { ...ingredientBun, id: action.payload.uniqueId },
+            { ...ingredientBun, id: action.payload.uniqueId }
+          );
+
+          state.order.orderPrice = calculateOrderPrice(
+            state.constructorIngredients
+          );
+        }
+      },
+      prepare: ingredient => {
+        const uniqueId = `${uuidv4()}-${Date.now()}`;
+        return { payload: { ...ingredient, uniqueId } };
+      },
     },
 
     deleteIngredientToConstructor: (state, action) => {
@@ -126,8 +124,8 @@ export const ingredientsSlice = createSlice({
       })
       .addCase(fetchIngredients.rejected, (state, action) => {
         state.isLoadingIngredients = false;
-        state.hasErrorIngredients = true;
-        console.error(action.payload);
+        state.hasErrorIngredients =
+          action.payload || 'Error fetching ingredients';
       })
       .addCase(createOrder.pending, state => {
         state.order.orderStatus = 'loading';
@@ -139,63 +137,35 @@ export const ingredientsSlice = createSlice({
       })
       .addCase(createOrder.rejected, (state, action) => {
         state.order.orderStatus = 'error';
-        state.order.orderError = action.payload || 'Unknown error';
+        state.order.orderError = action.payload || 'Error creating order';
       });
   },
 });
 
 export const fetchIngredients = createAsyncThunk(
   'ingredients/fetchIngredients',
-  async (_, { rejectWithValue }) => {
-    try {
-      const res = await fetch(`${BASE_URL}/api/ingredients`);
+  async () => {
+    const res = await request('/api/ingredients');
 
-      if (!res.ok) {
-        throw new Error(`Response status: ${res.status}`);
-      }
-
-      const json = await res.json();
-
-      if (!json.success) {
-        throw new Error('Failed to fetch data: success = false');
-      }
-
-      return json.data;
-    } catch (e) {
-      return rejectWithValue(e.message);
-    }
+    return res.data;
   }
 );
 
 export const createOrder = createAsyncThunk(
   'ingredients/createOrder',
-  async (constructorIngredients, { rejectWithValue }) => {
-    try {
-      const res = await fetch(`${BASE_URL}/api/orders`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ ingredients: constructorIngredients }),
-      });
+  async constructorIngredients => {
+    const res = await request('/api/orders', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ ingredients: constructorIngredients }),
+    });
 
-      if (!res.ok) {
-        throw new Error(`Response status: ${res.status}`);
-      }
-
-      const data = await res.json();
-
-      if (!data.success) {
-        throw new Error('Failed to create order: success = false');
-      }
-
-      return {
-        name: data.name,
-        orderNumber: data.order.number,
-      };
-    } catch (e) {
-      return rejectWithValue(e.message);
-    }
+    return {
+      name: res.name,
+      orderNumber: res.order.number,
+    };
   }
 );
 

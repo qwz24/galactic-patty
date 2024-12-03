@@ -30,7 +30,7 @@ const RenderMains = ({ mains, borderColor, onDelete }) => {
           />
         ))
       ) : (
-        <li className='pr-2' style={{ display: 'flex', alignItems: 'center' }}>
+        <li className={`${style.ingredientsList} ${'pr-2'}`}>
           <DragIcon className='mr-2' />
           <CustomConstructorElement
             text='Выберите начинку'

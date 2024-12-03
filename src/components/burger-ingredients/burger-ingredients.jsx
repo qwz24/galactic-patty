@@ -42,7 +42,7 @@ const BurgerIngredients = () => {
     <div className={style.container}>
       <p className='text text_type_main-large pb-5'>Соберите бургер</p>
 
-      <div style={{ display: 'flex' }} ref={tabRef}>
+      <div className={style.containerTab} ref={tabRef}>
         <TabMenu activeTab={activeTab} setActiveTab={handleTabClick} />
       </div>
 

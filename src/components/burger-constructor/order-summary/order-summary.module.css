@@ -1,0 +1,10 @@
+.orderSummary {
+  display: flex;
+  justify-content: end;
+}
+
+.orderSummaryPrice {
+  display: flex;
+  align-items: center;
+  margin-right: 40px;
+}

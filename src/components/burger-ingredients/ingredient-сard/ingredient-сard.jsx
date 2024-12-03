@@ -60,24 +60,12 @@ const IngredientCard = props => {
           <IngredientDetails setIsModalOpen={setIsModalOpen} />
         </Modal>
       )}
-      <div
-        onClick={handleClick}
-        style={{ cursor: 'pointer' }}
-        className={style.card}
-        role='button'
-      >
+      <div onClick={handleClick} className={style.card} role='button'>
         {count(_id) > 0 && (
           <Counter count={count(_id)} size='default' extraClass='m-1' />
         )}
         <div>
-          <div
-            className={'mr-4 ml-4'}
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'end',
-            }}
-          >
+          <div className={`${style.cardContent} ${'mr-4 ml-4'}`}>
             <img
               ref={dragRef}
               src={image}

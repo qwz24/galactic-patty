@@ -2,6 +2,10 @@
   max-width: 600px;
 }
 
+.containerTab {
+  display: flex;
+}
+
 .cardsContainer {
   display: flex;
   justify-content: space-between;

@@ -3,6 +3,7 @@ import {
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
+import style from './order-summary.module.css';
 
 const OrderSummary = ({
   orderPrice,
@@ -15,20 +16,8 @@ const OrderSummary = ({
     onConfirmOrder(ingredientIds);
   };
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'end',
-      }}
-      className='mt-10 mr-8'
-    >
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          marginRight: '40px',
-        }}
-      >
+    <div className={`${style.orderSummary} ${'mt-10 mr-8'}`}>
+      <div className={style.orderSummaryPrice}>
         <p className='text text_type_digits-medium mr-2'>{orderPrice}</p>
         <CurrencyIcon />
       </div>

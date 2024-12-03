@@ -15,9 +15,7 @@ const IngredientDetails = ({ setIsModalOpen }) => {
   return (
     <div className={`${style.popupСontainer} ${'pt-10 pr-10 pb-15 pl-10'}`}>
       <div className={style.popupHeader}>
-        <p className='text text_type_main-large' style={{ lineHeight: '64px' }}>
-          Детали ингредиента
-        </p>
+        <p className='text text_type_main-large'>Детали ингредиента</p>
 
         <Button
           htmlType='button'

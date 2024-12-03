@@ -11,6 +11,7 @@ import {
 import OrderSummary from './order-summary/order-summary';
 import BunElement from './bun-element/bun-element';
 import RenderMains from './render-mains/render-mains';
+import style from './burger-constructor.module.css';
 
 const BurgerConstructor = () => {
   const constructorIngredients = useSelector(
@@ -61,8 +62,8 @@ const BurgerConstructor = () => {
         </Modal>
       )}
 
-      <div ref={dropTarget} className='mt-25' style={{ width: '600px' }}>
-        <ul style={{ listStyle: 'none', padding: '0px' }}>
+      <div ref={dropTarget} className={`${style.listContainer}${' mt-25'}`}>
+        <ul className={style.list}>
           <BunElement
             position={'top'}
             bun={buns[0]}
@@ -76,7 +77,7 @@ const BurgerConstructor = () => {
           onDelete={id => dispatch(deleteIngredientToConstructor(id))}
         />
 
-        <ul style={{ listStyle: 'none', padding: '0px' }}>
+        <ul className={style.list}>
           <BunElement
             position={'bottom'}
             bun={buns[1]}

@@ -2,6 +2,13 @@
   position: relative;
   display: flex;
   justify-content: end;
+  cursor: pointer;
+}
+
+.cardContent {
+  display: 'flex';
+  flex-direction: column;
+  align-items: end;
 }
 
 .cardPrice {

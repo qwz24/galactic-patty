@@ -17,10 +17,7 @@ const OrderDetails = ({ setIsModalOpen }) => {
     dispatch(resetOrderState());
   };
   return (
-    <div
-      className={`${style.popupСontainer} ${'pt-30 pr-25 pb-30 pl-25'}`}
-      style={{ position: 'relative' }}
-    >
+    <div className={`${style.popupСontainer} ${'pt-30 pr-25 pb-30 pl-25'}`}>
       <div className={style.popupClose}>
         <Button
           htmlType='button'
@@ -37,10 +34,9 @@ const OrderDetails = ({ setIsModalOpen }) => {
       <p className='text text_type_digits-large mb-8'>{orderNumber}</p>
       <p className='text text_type_main-medium'>идентификатор заказа</p>
       <img
-        style={{ maxWidth: '120px', maxHeight: '120px' }}
         src={done}
         alt='Ваш заказ начали готовить'
-        className='pt-15 pb-15'
+        className={`${style.popupImg} ${'pt-15 pb-15'}`}
       ></img>
       <p className='text text_type_main-default mb-2'>
         Ваш заказ начали готовить

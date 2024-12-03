@@ -10,3 +10,8 @@
   top: 60px;
   right: 40px;
 }
+
+.popupImg {
+  max-width: 120px;
+  max-height: 120px;
+}

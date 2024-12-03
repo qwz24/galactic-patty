@@ -1,3 +1,7 @@
 .dragging {
   transition: transform 0.2s ease, opacity 0.2s ease;
 }
+.listItem {
+  display: flex;
+  align-items: center;
+}

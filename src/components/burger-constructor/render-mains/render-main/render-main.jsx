@@ -66,8 +66,8 @@ const RenderMain = ({ main, handleClose, index, moveItem }) => {
 
   return (
     <li
-      className={`mb-4 pr-2 ${isDrag ? style.dragging : ''}`}
-      style={{ display: 'flex', alignItems: 'center', opacity }}
+      className={`mb-4 pr-2 ${style.listItem} ${isDrag ? style.dragging : ''}`}
+      style={{ opacity }}
       key={main.id}
       ref={ref}
     >

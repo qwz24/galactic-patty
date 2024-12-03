@@ -17,6 +17,11 @@
   background: #2f2f37;
 }
 
+.ingredientsList {
+  display: flex;
+  align-items: center;
+}
+
 .dragging {
   transition: transform 0.2s ease, opacity 0.2s ease;
 }

@@ -1,19 +1,15 @@
 import PropTypes from 'prop-types';
+import style from './constructor-element.module.css';
 
 const CustomConstructorElement = ({ position, text, borderColor }) => {
   return (
     <div
-      className={
+      className={`${
         position
           ? `constructor-element constructor-element_pos_${position}`
           : 'constructor-element'
-      }
+      } ${style.сonstructorElement}`}
       style={{
-        width: '100%',
-        maxWidth: '536px',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
         border: borderColor,
       }}
     >
