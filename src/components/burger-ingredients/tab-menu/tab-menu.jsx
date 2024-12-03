@@ -1,22 +1,37 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useState } from 'react';
+import PropTypes from 'prop-types';
 
-const TabMenu = () => {
-  const [current, setCurrent] = useState('one');
-
+const TabMenu = ({ activeTab, setActiveTab }) => {
   return (
     <>
-      <Tab value='Булки' active={current === 'Булки'} onClick={setCurrent}>
+      <Tab
+        value='bun'
+        active={activeTab === 'bun'}
+        onClick={() => setActiveTab('bun')}
+      >
         Булки
       </Tab>
-      <Tab value='Соусы' active={current === 'Соусы'} onClick={setCurrent}>
+      <Tab
+        value='sauce'
+        active={activeTab === 'sauce'}
+        onClick={() => setActiveTab('sauce')}
+      >
         Соусы
       </Tab>
-      <Tab value='Начинки' active={current === 'Начинки'} onClick={setCurrent}>
+      <Tab
+        value='main'
+        active={activeTab === 'main'}
+        onClick={() => setActiveTab('main')}
+      >
         Начинки
       </Tab>
     </>
   );
+};
+
+TabMenu.propTypes = {
+  activeTab: PropTypes.string.isRequired,
+  setActiveTab: PropTypes.func.isRequired,
 };
 
 export default TabMenu;
