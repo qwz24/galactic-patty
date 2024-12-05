@@ -12,6 +12,7 @@ const initialOrderState = {
 
 export const ingredientsSlice = createSlice({
   name: 'ingredients',
+
   initialState: {
     ingredientsList: [],
     categories: {
@@ -88,14 +89,6 @@ export const ingredientsSlice = createSlice({
       }
     },
 
-    resetOrderState: state => {
-      state.order.orderStatus = 'idle';
-      state.order.orderError = null;
-      state.order.orderDetails = null;
-      state.order.orderPrice = null;
-      state.constructorIngredients = { buns: [], mains: [] };
-    },
-
     updateIngredientToConstructor: (state, action) => {
       const { dragIndex, hoverIndex } = action.payload;
 
@@ -134,6 +127,8 @@ export const ingredientsSlice = createSlice({
       .addCase(createOrder.fulfilled, (state, action) => {
         state.order.orderStatus = 'success';
         state.order.orderDetails = action.payload;
+        state.constructorIngredients = initialConstructorIngredients;
+        state.order = initialOrderState;
       })
       .addCase(createOrder.rejected, (state, action) => {
         state.order.orderStatus = 'error';
@@ -183,7 +178,6 @@ export const {
   resetViewedIngredient,
   addIngredientToConstructor,
   deleteIngredientToConstructor,
-  resetOrderState,
   updateIngredientToConstructor,
 } = ingredientsSlice.actions;
 

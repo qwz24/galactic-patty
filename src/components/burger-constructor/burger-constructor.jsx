@@ -66,6 +66,7 @@ const BurgerConstructor = () => {
         <ul className={style.list}>
           <BunElement
             position={'top'}
+            positionText={'(верх)'}
             bun={buns[0]}
             borderColor={borderColorBun}
           />
@@ -80,6 +81,7 @@ const BurgerConstructor = () => {
         <ul className={style.list}>
           <BunElement
             position={'bottom'}
+            positionText={'(низ)'}
             bun={buns[1]}
             borderColor={borderColorBun}
           />
