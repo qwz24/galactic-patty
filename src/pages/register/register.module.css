@@ -1,0 +1,20 @@
+.registerContainer {
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.registerWrapper {
+  max-width: 480px;
+  max-height: 430px;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: center;
+  align-items: center;
+}

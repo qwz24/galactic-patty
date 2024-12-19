@@ -1,12 +1,15 @@
 import PropTypes from 'prop-types';
 import style from './modal-overlay.module.css';
+import { useDispatch } from 'react-redux';
+import { closeModal } from '../../../services/modalSlice';
 
-const ModalOverlay = ({ setIsModalOpen, children }) => {
+const ModalOverlay = ({ children }) => {
+  const dispatch = useDispatch();
   return (
     <div
       className={style.modalOverlay}
       onClick={() => {
-        setIsModalOpen(false);
+        dispatch(closeModal());
       }}
     >
       {children}
@@ -15,7 +18,6 @@ const ModalOverlay = ({ setIsModalOpen, children }) => {
 };
 
 ModalOverlay.propTypes = {
-  setIsModalOpen: PropTypes.func,
   children: PropTypes.element,
 };
 

@@ -1,0 +1,20 @@
+.authContainer {
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.authWrapper {
+  max-width: 480px;
+  max-height: 430px;
+}
+
+.authForm {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: center;
+  align-items: center;
+}

@@ -4,15 +4,16 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import done from '../../../images/done.png';
 import style from './order-details.module.css';
-import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../loader/loader';
+import { closeModal } from '../../../services/modalSlice';
 
-const OrderDetails = ({ setIsModalOpen }) => {
+const OrderDetails = () => {
   const orderNumber = useSelector(
     state => state.ingredients.order.orderDetails?.orderNumber
   );
   const orderStatus = useSelector(state => state.ingredients.order.orderStatus);
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -27,7 +28,7 @@ const OrderDetails = ({ setIsModalOpen }) => {
               size='small'
               style={{ padding: '0px' }}
               onClick={() => {
-                setIsModalOpen(false);
+                dispatch(closeModal());
               }}
             >
               <CloseIcon />
@@ -51,10 +52,6 @@ const OrderDetails = ({ setIsModalOpen }) => {
       )}
     </>
   );
-};
-
-OrderDetails.propTypes = {
-  setIsModalOpen: PropTypes.func.isRequired,
 };
 
 export default OrderDetails;

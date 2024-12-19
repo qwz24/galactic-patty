@@ -1,0 +1,61 @@
+.container {
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  justify-content: flex-start;
+  position: relative;
+}
+
+.wrapper {
+  max-width: 1240px;
+  margin: 120px auto 0;
+  width: 100%;
+  display: flex;
+  gap: 40px;
+}
+
+.navMenu {
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.navMenu .activeLink {
+  color: #f2f2f3;
+}
+
+.navMenu p {
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.navMenu p:hover {
+  color: #ffffff;
+}
+
+.formSection {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-direction: column;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  max-width: 480px;
+}
+
+.buttonWrapper {
+  display: flex;
+  width: 100%;
+  justify-content: end;
+}

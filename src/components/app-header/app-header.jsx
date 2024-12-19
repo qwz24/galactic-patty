@@ -5,46 +5,47 @@ import {
   ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import headerStyle from './app-header.module.css';
+import CustomNavLink from '../custom-link/custom-link';
 
 const AppHeader = () => {
   return (
-    <header className={headerStyle.headerContainer}>
-      <div className={headerStyle.header}>
-        <nav aria-label='Основная навигация' className={headerStyle.navigation}>
-          <ul className={headerStyle.navList}>
-            <li className={`${headerStyle.navItem} ${'pr-5 mr-2'}`}>
-              <a href='#' className={headerStyle.navLink}>
-                <BurgerIcon className='mr-2' type='primary' />
-                <p className='text text_type_main-default'>Конструктор</p>
-              </a>
-            </li>
-            <li className={headerStyle.navItem}>
-              <a href='#' className={headerStyle.navLink}>
-                <ListIcon className='mr-2' type='secondary' />
-                <p className='text text_type_main-default text_color_inactive'>
-                  Лента заказов
-                </p>
-              </a>
-            </li>
-          </ul>
-        </nav>
+    <div className={headerStyle.containerHeader}>
+      <header className={headerStyle.headerContainer}>
+        <div className={headerStyle.header}>
+          <nav
+            aria-label='Основная навигация'
+            className={headerStyle.navigation}
+          >
+            <ul className={headerStyle.navList}>
+              <li className={`${headerStyle.navItem} ${'pr-5 mr-2'}`}>
+                <CustomNavLink to='/' icon={BurgerIcon} label='Конструктор' />
+              </li>
+              <li className={headerStyle.navItem}>
+                <CustomNavLink
+                  to='/order'
+                  icon={ListIcon}
+                  label='Лента заказов'
+                />
+              </li>
+            </ul>
+          </nav>
 
-        <Logo />
+          <Logo className={headerStyle.logo} />
 
-        <nav aria-label='Навигация входа' className={headerStyle.navigation}>
-          <ul className={headerStyle.navList}>
-            <li className={headerStyle.navItem}>
-              <ProfileIcon className='mr-2' type='secondary' />
-              <a href='#' className={headerStyle.navLink}>
-                <p className='text text_type_main-default text_color_inactive'>
-                  Личный кабинет
-                </p>
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </header>
+          <nav aria-label='Навигация входа' className={headerStyle.navigation}>
+            <ul className={headerStyle.navList}>
+              <li className={headerStyle.navItem}>
+                <CustomNavLink
+                  to='/profile'
+                  icon={ProfileIcon}
+                  label='Личный кабинет'
+                />
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+    </div>
   );
 };
 

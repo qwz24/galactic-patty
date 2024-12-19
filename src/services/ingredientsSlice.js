@@ -126,9 +126,8 @@ export const ingredientsSlice = createSlice({
       })
       .addCase(createOrder.fulfilled, (state, action) => {
         state.order.orderStatus = 'success';
-        state.order.orderDetails = action.payload;
         state.constructorIngredients = initialConstructorIngredients;
-        state.order = initialOrderState;
+        state.order = { ...initialOrderState, orderDetails: action.payload };
       })
       .addCase(createOrder.rejected, (state, action) => {
         state.order.orderStatus = 'error';

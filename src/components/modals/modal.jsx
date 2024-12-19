@@ -3,26 +3,33 @@ import style from './modal.module.css';
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 import ModalOverlay from './modal-overlay/modal-overlay';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeModal } from '../../services/modalSlice';
 
 const modalRoot = document.getElementById('react-modals');
 
-const Modal = ({ children, setIsModalOpen }) => {
+const Modal = ({ children }) => {
+  const { isOpen } = useSelector(state => state.modal);
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const handleEscapeKey = e => {
       if (e.key === 'Escape') {
-        setIsModalOpen(false);
+        dispatch(closeModal());
       }
     };
-
     document.addEventListener('keydown', handleEscapeKey);
-
     return () => {
       document.removeEventListener('keydown', handleEscapeKey);
     };
-  }, [setIsModalOpen]);
+  }, [dispatch]);
+
+  if (!children) return null;
+  if (!isOpen) return null;
 
   return createPortal(
-    <ModalOverlay setIsModalOpen={setIsModalOpen}>
+    <ModalOverlay>
       <div className={style.modalContent} onClick={e => e.stopPropagation()}>
         {children}
       </div>
@@ -32,7 +39,6 @@ const Modal = ({ children, setIsModalOpen }) => {
 };
 
 Modal.propTypes = {
-  setIsModalOpen: PropTypes.func,
   children: PropTypes.element,
 };
 

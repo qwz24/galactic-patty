@@ -4,17 +4,25 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import style from './order-summary.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { openModal } from '../../../services/modalSlice';
+import { useNavigate } from 'react-router-dom';
 
-const OrderSummary = ({
-  orderPrice,
-  setIsModalOpen,
-  ingredientIds,
-  onConfirmOrder,
-}) => {
+const OrderSummary = ({ orderPrice, ingredientIds, onConfirmOrder }) => {
+  const user = useSelector(state => state.authorization.user);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleClick = () => {
-    setIsModalOpen(true);
-    onConfirmOrder(ingredientIds);
+    if (!user) {
+      navigate('/login');
+    } else {
+      dispatch(openModal('order'));
+      onConfirmOrder(ingredientIds);
+    }
   };
+
   return (
     <div className={`${style.orderSummary} ${'mt-10 mr-8'}`}>
       <div className={style.orderSummaryPrice}>
@@ -36,7 +44,6 @@ const OrderSummary = ({
 OrderSummary.propTypes = {
   orderPrice: PropTypes.number.isRequired,
   ingredientIds: PropTypes.array.isRequired,
-  setIsModalOpen: PropTypes.func.isRequired,
   onConfirmOrder: PropTypes.func.isRequired,
 };
 
