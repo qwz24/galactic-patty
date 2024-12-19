@@ -1,0 +1,23 @@
+.navLink {
+  outline: none;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.navLink:visited {
+  color: var(---text-default);
+}
+
+.navLink:focus {
+  color: var(---text-default);
+}
+
+.linkText {
+  color: var(---text-default);
+}
+
+.navLinkContent {
+  display: inline-flex;
+  align-items: center;
+}

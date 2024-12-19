@@ -4,12 +4,12 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './ingredient-сard.module.css';
 import PropTypes from 'prop-types';
-import { useCallback, useState } from 'react';
-import IngredientDetails from '../../modals/ingredient-details/ingredient-details';
-import Modal from '../../modals/modal';
+import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setViewedIngredient } from '../../../services/ingredientsSlice';
 import { useDrag } from 'react-dnd';
+import { openModal } from '../../../services/modalSlice';
+import { NavLink, useLocation } from 'react-router-dom';
 
 const IngredientCard = props => {
   const { _id, type, image, name, price } = props;
@@ -17,7 +17,8 @@ const IngredientCard = props => {
   const constructorIngredients = useSelector(
     state => state.ingredients.constructorIngredients
   );
-  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const location = useLocation();
 
   const dispatch = useDispatch();
 
@@ -49,17 +50,16 @@ const IngredientCard = props => {
   });
 
   const handleClick = () => {
-    setIsModalOpen(true);
+    dispatch(openModal('ingredient'));
     dispatch(setViewedIngredient({ ...props }));
   };
 
   return (
-    <>
-      {isModalOpen && (
-        <Modal setIsModalOpen={setIsModalOpen}>
-          <IngredientDetails setIsModalOpen={setIsModalOpen} />
-        </Modal>
-      )}
+    <NavLink
+      to={`/ingredients/${_id}`}
+      state={{ background: location }}
+      key={_id}
+    >
       <div onClick={handleClick} className={style.card} role='button'>
         {count(_id) > 0 && (
           <Counter count={count(_id)} size='default' extraClass='m-1' />
@@ -84,7 +84,7 @@ const IngredientCard = props => {
           </div>
         </div>
       </div>
-    </>
+    </NavLink>
   );
 };
 
