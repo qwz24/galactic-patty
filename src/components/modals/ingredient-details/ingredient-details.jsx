@@ -96,5 +96,5 @@ export default IngredientDetails;
 
 IngredientDetails.propTypes = {
   onClose: PropTypes.func,
-  isModal: PropTypes.bool.isRequired,
+  isModal: PropTypes.bool,
 };

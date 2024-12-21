@@ -152,7 +152,7 @@ export const logoutUser = createAsyncThunk(
 export const fetchUserProfile = createAsyncThunk(
   'authorization/fetchUserProfile',
   async () => {
-    const response = await fetchWithAuth('/api/auth/user', {
+    const res = await fetchWithAuth('/api/auth/user', {
       method: 'GET',
       mode: 'cors',
       cache: 'no-cache',
@@ -165,12 +165,7 @@ export const fetchUserProfile = createAsyncThunk(
       referrerPolicy: 'no-referrer',
     });
 
-    if (!response.ok) {
-      throw new Error('Failed to fetch user profile');
-    }
-
-    const data = await response.json();
-    return data;
+    return res;
   }
 );
 

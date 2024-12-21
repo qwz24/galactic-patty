@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import AppHeader from '../../components/app-header/app-header';
 import {
   Button,
   Input,
@@ -10,17 +9,15 @@ import style from './reset-password.module.css';
 import { useSelector } from 'react-redux';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { updatePassword } from '../../services/api';
+import { useForm } from '../../hooks/useForm';
 
 const ResetPasswordPage = () => {
   const { user } = useSelector(state => state.authorization);
-  const [form, setForm] = useState({
-    password: '',
-    token: '',
-  });
+  const { values, setValues, handleChange } = useForm();
 
   const navigate = useNavigate();
   const location = useLocation();
-  const isFormValid = form.token && form.password;
+  const isFormValid = values.token && values.password;
 
   useEffect(() => {
     if (
@@ -31,25 +28,10 @@ const ResetPasswordPage = () => {
     }
   }, [location.state, navigate]);
 
-  const handleChange = e => {
-    const { name, value } = e.target;
-
-    setForm({
-      ...form,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    updatePassword(form);
-    setForm({
-      password: '',
-      token: '',
-    });
-  };
-
-  const onClick = () => {
+    await updatePassword(values);
+    setValues({});
     navigate('/login');
   };
 
@@ -58,44 +40,40 @@ const ResetPasswordPage = () => {
   }
 
   return (
-    <>
-      <AppHeader />
+    <div className={style.resetPasswordContainer}>
+      <div className={style.resetPasswordWrapper}>
+        <form className={style.resetPasswordForm} onSubmit={handleSubmit}>
+          <h1 className='text text_type_main-medium'>Восстановление пароля</h1>
+          <PasswordInput
+            autoComplete='new-password'
+            onChange={handleChange}
+            value={values?.password || ''}
+            name={'password'}
+            placeholder='Введите новый пароль'
+          />
 
-      <div className={style.resetPasswordContainer}>
-        <div className={style.resetPasswordWrapper}>
-          <form className={style.resetPasswordForm} onSubmit={handleSubmit}>
-            <h1 className='text text_type_main-medium'>
-              Восстановление пароля
-            </h1>
-            <PasswordInput
-              onChange={handleChange}
-              value={form.password}
-              name={'password'}
-              placeholder='Введите новый пароль'
-            />
+          <Input
+            autoComplete='one-time-code'
+            placeholder={'Введите код из письма'}
+            onChange={handleChange}
+            value={values?.token || ''}
+            name={'token'}
+          />
 
-            <Input
-              placeholder={'Введите код из письма'}
-              onChange={handleChange}
-              value={form.token}
-              name={'token'}
-            />
+          <Button htmlType='submit' disabled={!isFormValid}>
+            Сохранить
+          </Button>
+        </form>
 
-            <Button htmlType='submit' disabled={!isFormValid} onClick={onClick}>
-              Сохранить
-            </Button>
-          </form>
-
-          <div className='mt-20'>
-            <RedirectBlock
-              text='Вспомнили пароль?'
-              buttonLabel='Войти'
-              pathname={'/login'}
-            />
-          </div>
+        <div className='mt-20'>
+          <RedirectBlock
+            text='Вспомнили пароль?'
+            buttonLabel='Войти'
+            pathname={'/login'}
+          />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

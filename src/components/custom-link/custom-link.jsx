@@ -26,5 +26,5 @@ export default CustomNavLink;
 CustomNavLink.propTypes = {
   to: PropTypes.string.isRequired,
   icon: PropTypes.func.isRequired,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
 };

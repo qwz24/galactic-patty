@@ -14,6 +14,7 @@ import { ProtectedRouteElement } from '../protected-route';
 import IngredientDetails from '../modals/ingredient-details/ingredient-details';
 import Modal from '../modals/modal';
 import { closeModal, openModal } from '../../services/modalSlice';
+import AppHeader from '../app-header/app-header';
 
 function App() {
   const modalType = localStorage.getItem('modalType');
@@ -33,6 +34,7 @@ function App() {
 
   return (
     <>
+      <AppHeader />
       <Routes location={location.state?.background ?? location}>
         <Route path='/' element={<HomePage />} />
         <Route path='/login' element={<LoginPage />} />

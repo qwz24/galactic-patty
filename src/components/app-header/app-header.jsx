@@ -30,7 +30,9 @@ const AppHeader = () => {
             </ul>
           </nav>
 
-          <Logo className={headerStyle.logo} />
+          <div className={headerStyle.logo}>
+            <CustomNavLink to='/' icon={Logo} />
+          </div>
 
           <nav aria-label='Навигация входа' className={headerStyle.navigation}>
             <ul className={headerStyle.navList}>

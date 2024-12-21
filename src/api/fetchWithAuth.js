@@ -21,8 +21,8 @@ export const fetchWithAuth = async (endpoint, option = {}) => {
 
       response = await fetch(`${BASE_URL}${endpoint}`, option);
     }
-
-    return response;
+    const data = await response.json();
+    return data;
   } catch (error) {
     console.error('Error in fetchWithAuth:', error);
     throw error;
