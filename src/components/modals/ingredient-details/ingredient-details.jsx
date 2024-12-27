@@ -6,39 +6,49 @@ import style from './ingredient-details.module.css';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetViewedIngredient } from '../../../services/ingredientsSlice';
+import { useNavigate, useParams } from 'react-router-dom';
 
-const IngredientDetails = ({ setIsModalOpen }) => {
-  const { carbohydrates, fat, proteins, calories, image_large, name } =
-    useSelector(state => state.ingredients.viewedIngredient);
+const IngredientDetails = ({ onClose, isModal = true }) => {
+  const { id } = useParams();
+  const ingredients = useSelector(state => state.ingredients.ingredientsList);
+  const openedIngredient = ingredients.find(ing => ing._id === id);
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+
   return (
     <div className={`${style.popupСontainer} ${'pt-10 pr-10 pb-15 pl-10'}`}>
-      <div className={style.popupHeader}>
+      <div className={isModal ? style.popupHeader : ''}>
         <p className='text text_type_main-large'>Детали ингредиента</p>
 
-        <Button
-          htmlType='button'
-          type='secondary'
-          size='small'
-          style={{ padding: '0px' }}
-          onClick={() => {
-            setIsModalOpen(false);
-            dispatch(resetViewedIngredient());
-          }}
-        >
-          <CloseIcon />
-        </Button>
+        {isModal && (
+          <Button
+            htmlType='button'
+            type='secondary'
+            size='small'
+            style={{ padding: '0px' }}
+            onClick={() => {
+              onClose();
+              navigate('/');
+              dispatch(resetViewedIngredient());
+            }}
+          >
+            <CloseIcon />
+          </Button>
+        )}
       </div>
 
-      <img src={image_large} alt={`Изображение ингредиента ${name}`} />
+      <img
+        src={openedIngredient?.image_large}
+        alt={`Изображение ингредиента ${openedIngredient?.name}`}
+      />
 
       <p
         className={`${
           style.popupTitle
         } ${'text text_type_main-medium mt-4 mb-8'}`}
       >
-        {name}
+        {openedIngredient?.name}
       </p>
 
       <div className={style.popupNutrients}>
@@ -47,7 +57,7 @@ const IngredientDetails = ({ setIsModalOpen }) => {
             Калории,ккал
           </p>
           <p className='text text_type_digits-default text_color_inactive'>
-            {calories}
+            {openedIngredient?.calories}
           </p>
         </div>
 
@@ -56,7 +66,7 @@ const IngredientDetails = ({ setIsModalOpen }) => {
             Белки, г
           </p>
           <p className='text text_type_digits-default text_color_inactive'>
-            {proteins}
+            {openedIngredient?.proteins}
           </p>
         </div>
 
@@ -65,7 +75,7 @@ const IngredientDetails = ({ setIsModalOpen }) => {
             Жиры, г
           </p>
           <p className='text text_type_digits-default text_color_inactive'>
-            {fat}
+            {openedIngredient?.fat}
           </p>
         </div>
 
@@ -74,7 +84,7 @@ const IngredientDetails = ({ setIsModalOpen }) => {
             Углеводы, г
           </p>
           <p className='text text_type_digits-default text_color_inactive'>
-            {carbohydrates}
+            {openedIngredient?.carbohydrates}
           </p>
         </div>
       </div>
@@ -85,5 +95,6 @@ const IngredientDetails = ({ setIsModalOpen }) => {
 export default IngredientDetails;
 
 IngredientDetails.propTypes = {
-  setIsModalOpen: PropTypes.func.isRequired,
+  onClose: PropTypes.func,
+  isModal: PropTypes.bool,
 };

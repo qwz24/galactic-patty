@@ -1,5 +1,4 @@
 import Modal from '../modals/modal';
-import { useState } from 'react';
 import OrderDetails from '../modals/order-details/order-details';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
@@ -18,8 +17,8 @@ const BurgerConstructor = () => {
     state => state.ingredients.constructorIngredients
   );
   const orderPrice = useSelector(state => state.ingredients.order.orderPrice);
+  const modalType = localStorage.getItem('modalType');
   const dispatch = useDispatch();
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { buns, mains } = constructorIngredients;
 
@@ -54,49 +53,48 @@ const BurgerConstructor = () => {
   const borderColorBun = getBorderColor(['bun']);
   const borderColorIngredient = getBorderColor(['main', 'sauce']);
 
+  if (modalType === 'order') {
+    return (
+      <Modal>
+        <OrderDetails />
+      </Modal>
+    );
+  }
+
   return (
-    <>
-      {isModalOpen && (
-        <Modal setIsModalOpen={setIsModalOpen}>
-          <OrderDetails setIsModalOpen={setIsModalOpen} />
-        </Modal>
-      )}
-
-      <div ref={dropTarget} className={`${style.listContainer}${' mt-25'}`}>
-        <ul className={style.list}>
-          <BunElement
-            position={'top'}
-            positionText={'(верх)'}
-            bun={buns[0]}
-            borderColor={borderColorBun}
-          />
-        </ul>
-
-        <RenderMains
-          mains={mains}
-          borderColor={borderColorIngredient}
-          onDelete={id => dispatch(deleteIngredientToConstructor(id))}
+    <div ref={dropTarget} className={`${style.listContainer}${' mt-25'}`}>
+      <ul className={style.list}>
+        <BunElement
+          position={'top'}
+          positionText={'(верх)'}
+          bun={buns[0]}
+          borderColor={borderColorBun}
         />
+      </ul>
 
-        <ul className={style.list}>
-          <BunElement
-            position={'bottom'}
-            positionText={'(низ)'}
-            bun={buns[1]}
-            borderColor={borderColorBun}
-          />
-        </ul>
+      <RenderMains
+        mains={mains}
+        borderColor={borderColorIngredient}
+        onDelete={id => dispatch(deleteIngredientToConstructor(id))}
+      />
 
-        {orderPrice && (
-          <OrderSummary
-            setIsModalOpen={setIsModalOpen}
-            orderPrice={orderPrice}
-            ingredientIds={allIngredients}
-            onConfirmOrder={() => dispatch(createOrder(allIngredients))}
-          />
-        )}
-      </div>
-    </>
+      <ul className={style.list}>
+        <BunElement
+          position={'bottom'}
+          positionText={'(низ)'}
+          bun={buns[1]}
+          borderColor={borderColorBun}
+        />
+      </ul>
+
+      {orderPrice && (
+        <OrderSummary
+          orderPrice={orderPrice}
+          ingredientIds={allIngredients}
+          onConfirmOrder={() => dispatch(createOrder(allIngredients))}
+        />
+      )}
+    </div>
   );
 };
 
