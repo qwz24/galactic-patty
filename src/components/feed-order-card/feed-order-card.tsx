@@ -28,7 +28,10 @@ const OrderCard: FC<Props> = ({
     state => state.ingredients.ingredientsMap
   );
 
-  const ingredientsToDisplay = ingredientIds?.map(id => ingredientsMap[id]);
+  const ingredientsToDisplay =
+    ingredientIds && ingredientIds.length > 0
+      ? ingredientIds.map(id => ingredientsMap[id])
+      : [];
 
   const totalPrice = ingredientsToDisplay?.reduce(
     (acc: number, i: TIngredient) => {
@@ -107,13 +110,13 @@ const OrderCard: FC<Props> = ({
               {ingredientsToDisplay && ingredientsToDisplay?.length > 5 && (
                 <div className={style.ingredientImage}>
                   <img
-                    src={ingredientsToDisplay[5].image}
-                    alt={ingredientsToDisplay[5].name}
+                    src={ingredientsToDisplay[5]?.image}
+                    alt={ingredientsToDisplay[5]?.name}
                   />
                   <span
                     className={`${style.ingredientCounter} text text_type_main-default`}
                   >
-                    +{ingredientsToDisplay.length - 5}
+                    +{ingredientsToDisplay?.length - 5}
                   </span>
                 </div>
               )}

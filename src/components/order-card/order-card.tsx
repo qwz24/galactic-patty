@@ -77,10 +77,10 @@ const OrderCard: FC<Props> = ({ isModal = true }) => {
             <p className='text text_type_main-medium pb-4'>Состав:</p>
             <div className={`${style.orderStructure} mb-10`}>
               <ul className={style.orderList}>
-                {ingredients.map(ing => (
-                  <li key={ing._id} className={`${style.orderItem} mr-6 mb-4`}>
+                {ingredients?.map(ing => (
+                  <li key={ing?._id} className={`${style.orderItem} mr-6 mb-4`}>
                     <div className={style.ingredientInfo}>
-                      <img src={ing.image} alt={ing.name} />
+                      <img src={ing?.image} alt={ing?.name} />
                       <p
                         className={`${style.ingredientName} text text_type_main-default pl-4 pr-4`}
                       >
@@ -92,13 +92,13 @@ const OrderCard: FC<Props> = ({ isModal = true }) => {
                         <p
                           className={`${style.ingredientQuantity} text text_type_digits-default`}
                         >
-                          {ing.count} x
+                          {ing?.count} x
                         </p>
                       )}
                       <p
                         className={`${style.ingredientCost} text text_type_digits-default`}
                       >
-                        {ing.price} <CurrencyIcon type='primary' />
+                        {ing?.price} <CurrencyIcon type='primary' />
                       </p>
                     </div>
                   </li>
