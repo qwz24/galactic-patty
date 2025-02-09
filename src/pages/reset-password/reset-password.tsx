@@ -6,14 +6,13 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import RedirectBlock from '../../components/redirect-block/redirect-block';
 import style from './reset-password.module.css';
-import { useSelector } from 'react-redux';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { updatePassword } from '../../services/api';
 import { useForm } from '../../hooks/useForm';
-import { RootState } from '../../services/store';
+import { useAppSelector } from '../../services/store';
 
 const ResetPasswordPage: FC = () => {
-  const { user } = useSelector((state: RootState) => state.authorization);
+  const { user } = useAppSelector(state => state.authorization);
   const { values, setValues, handleChange } = useForm<{
     token: string;
     password: string;

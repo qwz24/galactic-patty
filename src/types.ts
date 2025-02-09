@@ -24,3 +24,19 @@ export type Categories = {
   sauces: TIngredient[];
   mains: TIngredient[];
 };
+
+export type Order = {
+  ingredients: string[];
+  _id: string;
+  name: string;
+  status: 'created' | 'pending' | 'done';
+  number: number;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type TMessage = {
+  orders: Order[];
+  total: number;
+  totalToday: number;
+};

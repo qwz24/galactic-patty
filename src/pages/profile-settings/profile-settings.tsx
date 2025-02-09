@@ -5,14 +5,13 @@ import {
   EmailInput,
   Input,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from 'react-redux';
-import { logoutUser, updateUserData } from '../../services/authorizationSlice';
-import { useNavigate } from 'react-router-dom';
+import { updateUserData } from '../../services/authorizationSlice';
 import { useForm } from '../../hooks/useForm';
-import { AppDispatch, RootState } from '../../services/store';
+import { useAppDispatch, useAppSelector } from '../../services/store';
+import ProfileNav from '../../components/profile-nav/profile-nav';
 
 const ProfilePage: FC = () => {
-  const { user } = useSelector((state: RootState) => state.authorization);
+  const { user } = useAppSelector(state => state.authorization);
 
   const initialForm = {
     name: user?.name ?? '',
@@ -25,8 +24,7 @@ const ProfilePage: FC = () => {
 
   const prevFormRef = useRef(values);
 
-  const dispatch = useDispatch<AppDispatch>();
-  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const isFormModified =
@@ -44,11 +42,6 @@ const ProfilePage: FC = () => {
     setModificationForm(false);
   };
 
-  const onClick = async () => {
-    await dispatch(logoutUser());
-    navigate('/login', { replace: true });
-  };
-
   const resetForm = () => {
     setValues(initialForm);
     prevFormRef.current = initialForm;
@@ -58,24 +51,7 @@ const ProfilePage: FC = () => {
   return (
     <div className={style.container}>
       <div className={style.wrapper}>
-        <nav className={style.navMenu}>
-          <p className={`text text_type_main-medium ${style.activeLink}`}>
-            Профиль
-          </p>
-          <p className='text text_type_main-medium text_color_inactive'>
-            История заказов
-          </p>
-          <p
-            onClick={onClick}
-            className='text text_type_main-medium text_color_inactive'
-          >
-            Выход
-          </p>
-
-          <p className='text text_type_main-default text_color_inactive mt-20'>
-            В этом разделе вы можете изменить свои персональные данные
-          </p>
-        </nav>
+        <ProfileNav />
 
         <section className={style.formSection}>
           <form className={style.form} onSubmit={handleSubmit}>

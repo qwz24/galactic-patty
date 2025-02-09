@@ -23,7 +23,7 @@ const AppHeader: FC = () => {
               </li>
               <li className={headerStyle.navItem}>
                 <CustomNavLink
-                  to='/order'
+                  to='/feed'
                   icon={ListIcon}
                   label='Лента заказов'
                 />

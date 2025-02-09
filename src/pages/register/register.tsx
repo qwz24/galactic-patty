@@ -7,14 +7,12 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './register.module.css';
 import RedirectBlock from '../../components/redirect-block/redirect-block';
-
-import { useDispatch } from 'react-redux';
 import { registerUser } from '../../services/authorizationSlice';
 import { Navigate, useNavigate } from 'react-router-dom';
 import useAuthCheck from '../../hooks/useAuthCheck';
 import Loader from '../../components/loader/loader';
 import { useForm } from '../../hooks/useForm';
-import { AppDispatch } from '../../services/store';
+import { useAppDispatch } from '../../services/store';
 
 const RegisterPage = () => {
   const { values, handleChange } = useForm<{
@@ -26,7 +24,7 @@ const RegisterPage = () => {
   const { user, isUserLoaded } = useAuthCheck();
 
   const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

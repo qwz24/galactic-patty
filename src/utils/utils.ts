@@ -1,4 +1,5 @@
 import { BASE_URL } from '../constans/api';
+import { Order } from '../types';
 
 const checkResponse = async (res: Response) => {
   if (!res.ok) {
@@ -71,3 +72,35 @@ export function setCookie(
 export function deleteCookie(name: string) {
   setCookie(name, null, { expires: -1 });
 }
+
+export function formatDate(isoString: string): string {
+  const date = new Date(isoString);
+  const now = new Date();
+
+  const options: Intl.DateTimeFormatOptions = {
+    hour: '2-digit',
+    minute: '2-digit',
+  };
+
+  const formattedTime = new Intl.DateTimeFormat('ru-RU', options).format(date);
+
+  const diffMs = now.setHours(0, 0, 0, 0) - date.setHours(0, 0, 0, 0);
+  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+  if (diffDays === 0) return `Сегодня, ${formattedTime}`;
+  if (diffDays === 1) return `Вчера, ${formattedTime}`;
+  return `${diffDays} ${getDayWord(diffDays)} назад, ${formattedTime}`;
+}
+
+function getDayWord(days: number): string {
+  if (days % 10 === 1 && days % 100 !== 11) return 'день';
+  if ([2, 3, 4].includes(days % 10) && ![12, 13, 14].includes(days % 100))
+    return 'дня';
+  return 'дней';
+}
+
+// Функция для разбиения массива на группы по 10 элементов
+export const chunkArray = (arr: Order[], size: number) =>
+  Array.from({ length: Math.ceil(arr.length / size) }, (_, index) =>
+    arr.slice(index * size, index * size + size)
+  );

@@ -1,0 +1,33 @@
+.container {
+  max-width: 1240px;
+  width: 100%;
+  margin: 40px auto;
+}
+
+.containerMain {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.orderFeed {
+  min-height: 80px;
+  max-height: 870px;
+  overflow-y: scroll;
+}
+
+.orderFeed::-webkit-scrollbar {
+  width: 8px;
+}
+
+.orderFeed::-webkit-scrollbar-thumb {
+  background-color: #8585ad;
+}
+
+.orderFeed::-webkit-scrollbar-track {
+  background: #2f2f37;
+}
+
+.orderDashboard {
+  min-width: 580px;
+}

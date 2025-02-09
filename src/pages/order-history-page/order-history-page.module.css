@@ -1,0 +1,36 @@
+.container {
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  justify-content: flex-start;
+  position: relative;
+}
+
+.wrapper {
+  max-width: 1240px;
+  margin: 120px auto 0;
+  width: 100%;
+  display: flex;
+  gap: 40px;
+}
+
+.orderFeed {
+  display: flex;
+  flex-direction: column;
+  max-height: 916px;
+  overflow-y: scroll;
+  padding-right: 8px;
+}
+
+.orderFeed::-webkit-scrollbar {
+  width: 8px;
+}
+
+.orderFeed::-webkit-scrollbar-thumb {
+  background-color: #8585ad;
+}
+
+.orderFeed::-webkit-scrollbar-track {
+  background: #2f2f37;
+}
