@@ -1,5 +1,5 @@
 import { BASE_URL } from '../constans/api';
-import { getCookie, setCookie } from '../utils/utils';
+import { deleteCookie, getCookie, setCookie } from '../utils/utils';
 
 export async function updateAccessToken() {
   const refreshToken = getCookie('refreshToken');
@@ -23,6 +23,8 @@ export async function updateAccessToken() {
   const data = await response.json();
 
   const newAccessToken = data.accessToken;
+
+  deleteCookie('accessToken');
 
   setCookie('accessToken', newAccessToken);
 

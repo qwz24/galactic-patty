@@ -3,26 +3,21 @@ import {
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './order-summary.module.css';
-import { useDispatch, useSelector } from 'react-redux';
 import { openModal } from '../../../services/modalSlice';
 import { useNavigate } from 'react-router-dom';
 import { FC } from 'react';
-import { RootState } from '../../../services/store';
+import { useAppDispatch, useAppSelector } from '../../../services/store';
+import { createOrder } from '../../../services/ingredientsSlice';
 
 type Props = {
   orderPrice: number;
   ingredientIds: string[];
-  onConfirmOrder: (ingredientIds: string[]) => void;
 };
 
-const OrderSummary: FC<Props> = ({
-  orderPrice,
-  ingredientIds,
-  onConfirmOrder,
-}) => {
-  const user = useSelector((state: RootState) => state.authorization.user);
+const OrderSummary: FC<Props> = ({ orderPrice, ingredientIds }) => {
+  const user = useAppSelector(state => state.authorization.user);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -30,7 +25,7 @@ const OrderSummary: FC<Props> = ({
       navigate('/login');
     } else {
       dispatch(openModal('order'));
-      onConfirmOrder(ingredientIds);
+      dispatch(createOrder(ingredientIds));
     }
   };
 

@@ -4,12 +4,11 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './ingredient-сard.module.css';
 import { FC, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { setViewedIngredient } from '../../../services/ingredientsSlice';
 import { useDrag } from 'react-dnd';
 import { openModal } from '../../../services/modalSlice';
 import { NavLink, useLocation } from 'react-router-dom';
-import { RootState } from '../../../services/store';
+import { useAppDispatch, useAppSelector } from '../../../services/store';
 import { TConstructorIngredients } from '../../../types';
 
 type Props = {
@@ -25,13 +24,13 @@ type exponentCallback = (id: string) => number;
 const IngredientCard: FC<Props> = props => {
   const { _id, type, image, name, price } = props;
 
-  const constructorIngredients: TConstructorIngredients = useSelector(
-    (state: RootState) => state.ingredients.constructorIngredients
+  const constructorIngredients: TConstructorIngredients = useAppSelector(
+    state => state.ingredients.constructorIngredients
   );
 
   const location = useLocation();
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const count = useCallback<exponentCallback>(
     id => {
@@ -67,11 +66,7 @@ const IngredientCard: FC<Props> = props => {
   };
 
   return (
-    <NavLink
-      to={`/ingredients/${_id}`}
-      state={{ background: location }}
-      key={_id}
-    >
+    <NavLink to={`/ingredients/${_id}`} state={{ background: location }}>
       <div onClick={handleClick} className={style.card} role='button'>
         {count(_id) > 0 && (
           <Counter count={count(_id)} size='default' extraClass='m-1' />

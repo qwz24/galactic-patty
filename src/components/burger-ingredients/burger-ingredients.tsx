@@ -1,19 +1,26 @@
 import style from './burger-ingredients.module.css';
 import IngredientCard from './ingredient-сard/ingredient-сard';
 import TabMenu from './tab-menu/tab-menu';
-import { useSelector } from 'react-redux';
 import { useRef, useState } from 'react';
-import { RootState } from '../../services/store';
+import { useAppSelector } from '../../services/store';
 import { Categories } from '../../types';
+import Modal from '../modals/modal';
+import OrderDetails from '../modals/order-details/order-details';
+import Loader from '../loader/loader';
 
 const BurgerIngredients = () => {
-  const { buns, sauces, mains } = useSelector(
-    (state: RootState): Categories => state.ingredients.categories
+  const { buns, sauces, mains } = useAppSelector(
+    (state): Categories => state.ingredients.categories
+  );
+
+  const orderStatus = useAppSelector(
+    state => state.ingredients.order.orderStatus
   );
 
   const [activeTab, setActiveTab] = useState<string>('bun');
   const tabRef = useRef<HTMLDivElement | null>(null);
   const headersRef = useRef<(HTMLParagraphElement | null)[]>([]);
+  const modalType = localStorage.getItem('modalType');
 
   const handleScroll = () => {
     if (!tabRef.current) return;
@@ -46,57 +53,68 @@ const BurgerIngredients = () => {
   };
 
   return (
-    <div className={style.container}>
-      <p className='text text_type_main-large pb-5'>Соберите бургер</p>
+    <>
+      {modalType === 'order' && (
+        <Modal>
+          {orderStatus === 'loading' ? <Loader /> : <OrderDetails />}
+        </Modal>
+      )}
+      <div className={style.container}>
+        <p className='text text_type_main-large pb-5'>Соберите бургер</p>
 
-      <div className={style.containerTab} ref={tabRef}>
-        <TabMenu activeTab={activeTab} setActiveTab={handleTabClick} />
-      </div>
+        <div className={style.containerTab} ref={tabRef}>
+          <TabMenu activeTab={activeTab} setActiveTab={handleTabClick} />
+        </div>
 
-      <div
-        className={`${style.ingredientsContainer} ${'mt-10'}`}
-        onScroll={handleScroll}
-      >
-        <p
-          className='text text_type_main-medium'
-          ref={el => (headersRef.current[0] = el)}
+        <div
+          className={`${style.ingredientsContainer} ${'mt-10'}`}
+          onScroll={handleScroll}
         >
-          Булки
-        </p>
-        <div className={`${style.cardsContainer} ${'mt-6 mr-4 mb-10 ml-4'}`}>
-          {buns.map(bun => {
-            return <IngredientCard key={bun._id} {...bun} />;
-          })}
-        </div>
-        <div>
           <p
             className='text text_type_main-medium'
-            ref={el => (headersRef.current[1] = el)}
+            ref={el => (headersRef.current[0] = el)}
           >
-            Соусы
+            Булки
           </p>
           <div className={`${style.cardsContainer} ${'mt-6 mr-4 mb-10 ml-4'}`}>
-            {sauces.map(sauce => {
-              return <IngredientCard key={sauce._id} {...sauce} />;
+            {buns.map(bun => {
+              return <IngredientCard key={bun._id} {...bun} />;
             })}
           </div>
-        </div>
-        <div>
-          <p
-            className='text text_type_main-medium'
-            ref={el => (headersRef.current[2] = el)}
-          >
-            Начинки
-          </p>
+          <div>
+            <p
+              className='text text_type_main-medium'
+              ref={el => (headersRef.current[1] = el)}
+            >
+              Соусы
+            </p>
+            <div
+              className={`${style.cardsContainer} ${'mt-6 mr-4 mb-10 ml-4'}`}
+            >
+              {sauces.map(sauce => {
+                return <IngredientCard key={sauce._id} {...sauce} />;
+              })}
+            </div>
+          </div>
+          <div>
+            <p
+              className='text text_type_main-medium'
+              ref={el => (headersRef.current[2] = el)}
+            >
+              Начинки
+            </p>
 
-          <div className={`${style.cardsContainer} ${'mt-6 mr-4 mb-10 ml-4'}`}>
-            {mains.map(main => {
-              return <IngredientCard key={main._id} {...main} />;
-            })}
+            <div
+              className={`${style.cardsContainer} ${'mt-6 mr-4 mb-10 ml-4'}`}
+            >
+              {mains.map(main => {
+                return <IngredientCard key={main._id} {...main} />;
+              })}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

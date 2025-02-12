@@ -1,10 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
-import { request } from '../utils/utils';
+import { getCookie, request } from '../utils/utils';
 import { TIngredient } from '../types';
 
 type TState = {
   ingredientsList: [] | TIngredient[];
+  ingredientsMap: { [id: string]: TIngredient };
   categories: {
     buns: [] | TIngredient[];
     sauces: [] | TIngredient[];
@@ -37,6 +38,7 @@ const initialOrderState: TState['order'] = {
 
 const initialState: TState = {
   ingredientsList: [],
+  ingredientsMap: {},
   categories: {
     buns: [],
     sauces: [],
@@ -148,6 +150,13 @@ export const ingredientsSlice = createSlice({
       .addCase(fetchIngredients.fulfilled, (state, action) => {
         state.isLoadingIngredients = false;
         state.ingredientsList = action.payload;
+        state.ingredientsMap = action.payload.reduce(
+          (res: { [name: string]: TIngredient }, i: TIngredient) => {
+            res[i._id] = i;
+            return res;
+          },
+          {}
+        );
         state.categories = {
           buns: action.payload.filter((i: TIngredient) => i.type === 'bun'),
           sauces: action.payload.filter((i: TIngredient) => i.type === 'sauce'),
@@ -189,10 +198,12 @@ export const createOrder = createAsyncThunk<
   string[],
   { rejectValue: string }
 >('ingredients/createOrder', async constructorIngredients => {
+  const accessToken = getCookie('accessToken');
   const res = await request('/api/orders', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      ...(accessToken && { Authorization: accessToken }),
     },
     body: JSON.stringify({ ingredients: constructorIngredients }),
   });

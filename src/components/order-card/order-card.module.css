@@ -1,0 +1,141 @@
+.orderCardModal {
+  padding: 24px;
+}
+
+.orderCard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+  max-width: 100%;
+}
+
+.orderCardContent {
+  margin: 0 auto;
+  width: 640px;
+}
+
+.orderHeaderModal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.orderHeader {
+  display: flex;
+  justify-content: center;
+}
+
+.orderStatus {
+  color: #00cccc;
+}
+
+.ingredientsImages {
+  display: flex;
+  align-items: center;
+}
+
+.ingredientInfo img {
+  object-fit: cover;
+  top: 0;
+  left: 0;
+  border: 2px solid #801ab3;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+}
+.orderName {
+  max-width: 536px;
+}
+
+.ingredientName {
+  max-width: 536px;
+}
+
+.ingredientImage {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px solid #801ab3;
+  box-sizing: border-box;
+}
+
+.orderStructure {
+  max-height: 312px;
+  overflow-y: scroll;
+}
+
+.orderStructure::-webkit-scrollbar {
+  width: 8px;
+}
+
+.orderStructure::-webkit-scrollbar-thumb {
+  background-color: #8585ad;
+}
+
+.orderStructure::-webkit-scrollbar-track {
+  background: #2f2f37;
+}
+
+.totalPrice {
+  display: flex;
+}
+
+.hiddenIngredients {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px solid #801ab3;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+  margin-left: -20px;
+}
+
+.ingredientCounter {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.hiddenImage {
+  position: absolute;
+  filter: blur(0.5px);
+}
+
+.orderList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.orderItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ingredientInfo {
+  display: flex;
+  align-items: center;
+}
+
+.ingredientPrice {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ingredientCost {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.orderFooter {
+  display: flex;
+  justify-content: space-between;
+}

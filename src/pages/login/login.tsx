@@ -5,14 +5,13 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './login.module.css';
 import RedirectBlock from '../../components/redirect-block/redirect-block';
-import { useDispatch } from 'react-redux';
 import { loginUser } from '../../services/authorizationSlice';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import useAuthCheck from '../../hooks/useAuthCheck';
 import Loader from '../../components/loader/loader';
 import { useForm } from '../../hooks/useForm';
 import { FC, FormEvent } from 'react';
-import { AppDispatch } from '../../services/store';
+import { useAppDispatch } from '../../services/store';
 
 const LoginPage: FC = () => {
   const { values, handleChange } = useForm({ email: '', password: '' });
@@ -20,7 +19,7 @@ const LoginPage: FC = () => {
 
   const isFormValid = values.email && values.password;
 
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 

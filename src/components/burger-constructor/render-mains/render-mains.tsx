@@ -2,10 +2,10 @@ import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './render-mains.module.css';
 import CustomConstructorElement from '../constructor-element/constructor-element';
 import { FC, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
 import { updateIngredientToConstructor } from '../../../services/ingredientsSlice';
 import RenderMain from './render-main/render-main';
 import { TIngredient } from '../../../types';
+import { useAppDispatch } from '../../../services/store';
 
 type Props = {
   mains: TIngredient[];
@@ -16,7 +16,7 @@ type Props = {
 type exponentCallback = (dragIndex: number, hoverIndex: number) => void;
 
 const RenderMains: FC<Props> = ({ mains, borderColor, onDelete }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const moveCard = useCallback<exponentCallback>(
     (dragIndex, hoverIndex) => {

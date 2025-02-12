@@ -3,10 +3,9 @@ import {
   CloseIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './ingredient-details.module.css';
-import { useDispatch, useSelector } from 'react-redux';
 import { resetViewedIngredient } from '../../../services/ingredientsSlice';
 import { useNavigate, useParams } from 'react-router-dom';
-import { RootState } from '../../../services/store';
+import { useAppDispatch, useAppSelector } from '../../../services/store';
 import { TIngredient } from '../../../types';
 import { FC } from 'react';
 
@@ -17,8 +16,8 @@ type Props = {
 
 const IngredientDetails: FC<Props> = ({ onClose, isModal = true }) => {
   const { id } = useParams();
-  const ingredients: TIngredient[] = useSelector(
-    (state: RootState) => state.ingredients.ingredientsList
+  const ingredients: TIngredient[] = useAppSelector(
+    state => state.ingredients.ingredientsList
   );
 
   const openedIngredient: TIngredient | undefined = ingredients.find(
@@ -26,7 +25,7 @@ const IngredientDetails: FC<Props> = ({ onClose, isModal = true }) => {
   );
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   return (
     <div className={`${style.popupСontainer} ${'pt-10 pr-10 pb-15 pl-10'}`}>

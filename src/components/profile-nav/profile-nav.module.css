@@ -1,0 +1,34 @@
+.navMenu {
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.navMenu .activeLink {
+  color: #f2f2f3;
+}
+
+.navMenu p {
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.navMenu p:hover {
+  color: #ffffff;
+}
+
+.navLink {
+  outline: none;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.navLink:visited {
+  color: var(---text-default);
+}
+
+.navLink:focus {
+  color: var(---text-default);
+}
