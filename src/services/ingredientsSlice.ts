@@ -1,9 +1,9 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
 import { getCookie, request } from '../utils/utils';
 import { TIngredient } from '../types';
 
-type TState = {
+export type TState = {
   ingredientsList: [] | TIngredient[];
   ingredientsMap: { [id: string]: TIngredient };
   categories: {
@@ -36,7 +36,7 @@ const initialOrderState: TState['order'] = {
   orderDetails: null,
 };
 
-const initialState: TState = {
+export const initialState: TState = {
   ingredientsList: [],
   ingredientsMap: {},
   categories: {
@@ -65,7 +65,7 @@ export const ingredientsSlice = createSlice({
 
   initialState,
   reducers: {
-    setViewedIngredient: (state, action) => {
+    setViewedIngredient: (state, action: PayloadAction<TIngredient>) => {
       state.viewedIngredient = action.payload;
     },
     resetViewedIngredient: state => {

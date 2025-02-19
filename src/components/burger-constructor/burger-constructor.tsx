@@ -60,7 +60,11 @@ const BurgerConstructor: FC = () => {
   const borderColorIngredient = getBorderColor(['main', 'sauce']);
 
   return (
-    <div ref={dropTarget} className={`${style.listContainer}${' mt-25'}`}>
+    <div
+      data-test='constructor'
+      ref={dropTarget}
+      className={`${style.listContainer}${' mt-25'}`}
+    >
       <ul className={style.list}>
         <BunElement
           position={'top'}

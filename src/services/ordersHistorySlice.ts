@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Order } from '../types';
 
-type OrdersHistoryState = {
+export type OrdersHistoryState = {
   orders: Order[];
   total: number;
   totalToday: number;

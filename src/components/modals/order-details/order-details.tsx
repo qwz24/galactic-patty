@@ -16,9 +16,13 @@ const OrderDetails: FC = () => {
   const dispatch = useAppDispatch();
 
   return (
-    <div className={`${style.popupСontainer} ${'pt-30 pr-25 pb-30 pl-25'}`}>
+    <div
+      data-test='order-details'
+      className={`${style.popupСontainer} ${'pt-30 pr-25 pb-30 pl-25'}`}
+    >
       <div className={style.popupClose}>
         <Button
+          data-test='modal-close'
           htmlType='button'
           type='secondary'
           size='small'

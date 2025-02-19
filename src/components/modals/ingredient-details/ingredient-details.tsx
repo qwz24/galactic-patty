@@ -34,6 +34,7 @@ const IngredientDetails: FC<Props> = ({ onClose, isModal = true }) => {
 
         {isModal && (
           <Button
+            data-test='modal-close'
             htmlType='button'
             type='secondary'
             size='small'
