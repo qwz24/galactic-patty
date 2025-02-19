@@ -36,6 +36,7 @@ const OrderSummary: FC<Props> = ({ orderPrice, ingredientIds }) => {
         <CurrencyIcon type='primary' />
       </div>
       <Button
+        data-test='order-button'
         htmlType='button'
         type='primary'
         size='medium'

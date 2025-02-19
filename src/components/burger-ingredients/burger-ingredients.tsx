@@ -67,6 +67,8 @@ const BurgerIngredients = () => {
         </div>
 
         <div
+          data-test='ingredient'
+          draggable
           className={`${style.ingredientsContainer} ${'mt-10'}`}
           onScroll={handleScroll}
         >

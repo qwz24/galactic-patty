@@ -1,6 +1,9 @@
-# Getting Started with Create React App
+# Stellar Burger
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### 🌍 [Live Demo](https://galactic-patty.nomorepartiesco.ru)
+
+Stellar Burger is an interactive web application for building custom burgers.  
+It is built using **React**, **TypeScript**, **Redux Toolkit**, and a custom component library.
 
 ## Available Scripts
 

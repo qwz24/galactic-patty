@@ -24,7 +24,7 @@ type TState = {
   user: null | TUser;
 };
 
-const initialState: TState = {
+export const initialState: TState = {
   login: {
     status: 'idle',
     data: null,
@@ -83,6 +83,7 @@ const authorizationSlice = createSlice({
         document.cookie = `refreshToken=${action.payload.refreshToken}`;
       })
       .addCase(loginUser.rejected, (state, action) => {
+        state.login.status = 'failed';
         state.login.error = action.error.message ?? 'Authorization error';
       })
 

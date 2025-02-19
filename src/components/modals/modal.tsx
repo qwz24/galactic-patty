@@ -34,7 +34,11 @@ const Modal: FC<Props> = ({ children }) => {
 
   return createPortal(
     <ModalOverlay>
-      <div className={style.modalContent} onClick={e => e.stopPropagation()}>
+      <div
+        data-test='modal'
+        className={style.modalContent}
+        onClick={e => e.stopPropagation()}
+      >
         {children}
       </div>
     </ModalOverlay>,

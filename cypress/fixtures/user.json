@@ -1,0 +1,8 @@
+{
+  "success": true,
+  "user": {
+    "email": "test",
+    "name": "test",
+    "password": "test"
+  }
+}

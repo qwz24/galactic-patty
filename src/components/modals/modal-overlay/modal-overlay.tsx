@@ -13,6 +13,7 @@ const ModalOverlay: FC<Props> = ({ children }) => {
   const dispatch = useAppDispatch();
   return (
     <div
+      data-test='modal-overlay'
       className={style.modalOverlay}
       onClick={() => {
         dispatch(closeModal());
